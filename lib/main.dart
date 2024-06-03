@@ -8,9 +8,11 @@ void main() {
   runApp(
     SplashPage(
       key: UniqueKey(),
-      onInitializationComplete: () {
-        runApp(const ProviderScope(child: MyApp()));
-      },
+      onInitializationComplete: () => runApp(
+        const ProviderScope(
+          child: MyApp(),
+        ),
+      ),
     ),
   );
 }
@@ -21,6 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: "Cirama",
       initialRoute: 'home',
       routes: {

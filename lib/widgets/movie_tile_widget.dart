@@ -1,105 +1,96 @@
-import 'package:cirama/models/movie.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:get_it/get_it.dart';
+
+//Packages
+
+
+//Models
+import '../models/movie.dart';
 
 class MovieTile extends StatelessWidget {
-  final GetIt getIt = GetIt.instance;
 
-  final double height;
-  final double width;
-  final MovieModel movieModel;
+  final double? height;
+  final double? width;
+  final Movie? movie;
 
-  MovieTile(
-      {super.key,
-      required this.height,
-      required this.width,
-      required this.movieModel});
+  const MovieTile({super.key, this.movie, this.height, this.width});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _moviePosterWidget(movieModel.posterURL()),
-            _movieInfoTile(),
-          ]),
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _moviePosterWidget(movie!.posterURL()),
+          _movieInfoWidget(),
+        ],
+      ),
     );
   }
 
-  Widget _movieInfoTile() {
-    return Container(
-        height: height,
-        width: width * 0.66,
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: width * 0.56,
-                  child: Text(
-                    movieModel.name,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 22,
-                    ),
-                  ),
-                ),
-                Text(
-                  movieModel.rating.toString(),
+  Widget _movieInfoWidget() {
+    return SizedBox(
+      height: height,
+      width: width! * 0.67,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: width! * 0.50,
+                child: Text(
+                  movie!.name!,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 22,
-                  ),
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w400),
                 ),
-              ],
-            ),
-            Container(
-              padding: EdgeInsets.fromLTRB(0, height * 0.02, 0, 0),
-              child: Text(
-                '${movieModel.language.toUpperCase()} | R:${movieModel.isAdult} | ${movieModel.releaseDate}',
+              ),
+              Text(
+                movie!.rating!.toStringAsFixed(2),
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 12,
+                  fontSize: 22,
                 ),
               ),
+            ],
+          ),
+          Container(
+            padding: EdgeInsets.fromLTRB(0, height! * 0.02, 0, 0),
+            child: Text(
+              '${movie!.language!.toUpperCase()} | R: ${movie!.isAdult} | ${movie!.releaseDate}',
+              style: const TextStyle(color: Colors.white, fontSize: 12),
             ),
-            Container(
-              padding: EdgeInsets.fromLTRB(0, height * 0.07, 0, 0),
-              child: Text(
-                movieModel.description,
-                maxLines: 9,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  color: Colors.white70,
-                  fontSize: 10,
-                ),
-              ),
+          ),
+          Container(
+            padding: EdgeInsets.fromLTRB(0, height! * 0.07, 0, 0),
+            child: Text(
+              movie!.description!,
+              maxLines: 7,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(color: Colors.white70, fontSize: 10),
             ),
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _moviePosterWidget(String imageUrl) {
     return Container(
       height: height,
-      width: width*0.35,
+      width: width! * 0.35,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: NetworkImage(
-            imageUrl,
-          ),
+          image: NetworkImage(imageUrl),
         ),
       ),
     );
