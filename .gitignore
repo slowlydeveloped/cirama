@@ -44,4 +44,4 @@ app.*.map.json
 
 
 # API key
-/assets/config/main.json
+main.json
