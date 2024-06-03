@@ -47,6 +47,21 @@ class MovieService {
     }
   }
 
+  Future<List<Movie>?> getTopRatedMovies({int? page}) async {
+    Response? response = await _http.get('/movie/top_rated', query: {
+      'page': page,
+    });
+    if (response!.statusCode == 200) {
+      Map data = response.data;
+      List<Movie>? movies = data['results'].map<Movie>((movieData) {
+        return Movie.fromJson(movieData);
+      }).toList();
+      return movies;
+    } else {
+      throw Exception('Couldn\'t load top rated Movies.');
+    }
+  }
+
   Future<List<Movie>?> searchMovies(String? seachTerm, {int? page}) async {
     Response? response = await _http.get('/search/movie', query: {
       'query': seachTerm,

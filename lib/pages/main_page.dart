@@ -191,6 +191,13 @@ class MainPage extends ConsumerWidget {
             style: TextStyle(color: Colors.white),
           ),
         ),
+         DropdownMenuItem(
+          value: SearchCategory.topRated,
+          child: Text(
+            SearchCategory.topRated,
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
         DropdownMenuItem(
           value: SearchCategory.none,
           child: Text(
